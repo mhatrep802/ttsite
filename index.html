@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TraceTutor - PCB Design Mastery</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global UI Improvements */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fefb;
+            color: #1a3c34;
+            line-height: 1.6;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #1a3c34;
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 0.01em;
+        }
+        .section-heading {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+        .section-heading h2 {
+          font-size: 2.2rem;
+          color: #14532d;
+        }
+        .subheading {
+          font-size: 1.1rem;
+          color: #1a3c34;
+          opacity: 0.85;
+        }
+
+#yearToggle {
+  border-radius: 6px;
+  border: 1px solid #a7f3d0;
+  background: #f0fff4;
+  color: #14532d;
+}
+        section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 3rem 2rem;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            padding: 0.4rem 0;
+            font-size: 1.1rem;
+        }
+        input.email-input {
+            padding: 0.8rem;
+            width: 60%;
+            max-width: 400px;
+            margin: 1rem 0;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: #f0fff4;
+            color: #14532d;
+            transition: border-color 0.2s;
+        }
+        input.email-input:focus {
+            outline: none;
+            border-color: #22c55e;
+        }
+        button.cta-button {
+            padding: 0.8rem 1.5rem;
+            background-color: #1a3c34;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(34,197,94,0.07);
+        }
+        button.cta-button:hover {
+            background-color: #15803d;
+        }
+        .contact-section {
+            background-color: #e7fbe9;
+            text-align: center;
+        }
+        footer.footer {
+            background: #1a3c34;
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #1a3c34;
+            padding: 1rem 2rem;
+            color: #fff;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 0.03em;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 1rem;
+            transition: color 0.2s ease-in-out;
+        }
+        .nav-links a:hover {
+            color: #22c55e;
+        }
+        .search-prompt {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: #14532d;
+        }
+
+        /* Heatmap Table Styles */
+        .heatmap-table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-family: inherit;
+            width: 90%;
+            max-width: 1200px;
+            text-align: center;
+            box-shadow: 0 4px 24px 0 rgba(34,197,94,0.07);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .heatmap-table th,
+        .heatmap-table td {
+            border: 1px solid #d1fae5;
+            padding: 10px 15px;
+        }
+        .heatmap-table th {
+            background-color: #e7fbe9;
+            font-weight: bold;
+            color: #14532d;
+        }
+        .heatmap-table caption {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1a3c34;
+        }
+        /* Heatmap colors (blues replaced with greens) */
+        .heatmap-0 { background-color: #ffffff; }
+        .heatmap-1 { background-color: #bbf7d0; }
+        .heatmap-2 { background-color: #6ee7b7; }
+        .heatmap-3 { background-color: #34d399; color: #14532d; }
+        .heatmap-4 { background-color: #22c55e; color: #fff; }
+        .heatmap-5 { background-color: #166534; color: #fff; }
+        /* Highlight for active nav link */
+        .navbar .nav-links a.active {
+            font-weight: bold;
+            color: #22c55e;
+            border-bottom: 2px solid #22c55e;
+        }
+        /* Main content container */
+        main {
+            padding: 20px 10px 50px 10px;
+        }
+
+        /* Hero Header Styles */
+        .hero-header {
+          background: linear-gradient(90deg, #22c55e 0%, #f0fff4 100%);
+          color: #1a3c34;
+          padding: 5rem 2rem;
+          text-align: center;
+        }
+        .hero-header h1 {
+          font-size: 2.8rem;
+          margin-bottom: 1rem;
+          font-weight: bold;
+          color: #14532d;
+        }
+        .hero-header p {
+          font-size: 1.2rem;
+          max-width: 700px;
+          margin: 0 auto 2rem auto;
+          line-height: 1.6;
+          color: #166534;
+        }
+        .hero-buttons .cta-button {
+          margin: 0 0.5rem;
+        }
+        /* Pitch Section Styles */
+#pitch h3 {
+  color: #14532d;
+  margin-bottom: 0.5rem;
+}
+#pitch p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+    </style>
+    <style>
+    .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s forwards;
+    }
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .cta-button.secondary {
+        background-color: #ffffff;
+        color: #001f3f;
+        border: 2px solid #001f3f;
+        margin-left: 1rem;
+    }
+    .cta-button.secondary:hover {
+        background-color: #001f3f;
+        color: #fff;
+    }
+    </style>
+    <style>
+    .solution-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    .solution-box {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-left: 5px solid #2e86c1;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .solution-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .solution-box h3 {
+        margin-top: 0;
+        color: #001f3f;
+    }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">TraceTutor</div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="index.html#problem">Problem</a>
+                <a href="index.html#solution">Solution</a>
+                <a href="#market">Market Need</a>
+                <a href="demo.html" target="_blank">Demo</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#financials">Financials</a>
+                <a href="#cost-breakdown">Cost Breakdown</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-header">
+      <div class="hero-content">
+        <h1>Master PCB Design with AI-Powered Precision</h1>
+        <p>Your personalized learning path, hands-on projects, and real-time feedback — all in one platform.</p>
+        <div class="hero-buttons">
+          <a href="#pricing" class="cta-button">Try for Free</a>
+          <a href="#contact" class="cta-button secondary">Join the Waitlist</a>
+          <a href="files/tt-forecast.pdf" class="cta-button secondary" target="_blank">Download Pitch PDF</a>
+        </div>
+      </div>
+    </header>
+    <section id="demo" class="fade-in-up" style="background: #ffffff; padding: 3rem 2rem; text-align: center;">
+      <div class="section-heading">
+        <h2>See TraceTutor in Action</h2>
+        <p class="subheading">Preview how our AI guides your learning journey</p>
+      </div>
+      <div style="margin-top: 2rem;">
+        <img src="files/demo-placeholder.png" alt="Demo walkthrough preview" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.05);">
+        <p style="margin-top: 1rem; font-size: 1rem; color: #1a3c34;">(Animated walkthrough or platform preview coming soon)</p>
+      </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="fade-in-up" style="padding: 2rem;">
+        <h2>The Current PCB Education System is Broken</h2>
+        <p>Students and engineers waste countless hours navigating scattered tutorials, outdated university courses, and tool overload. There’s no clear path to mastering PCB design — just frustration, confusion, and wasted time.</p>
+    </section>
+
+    <!-- Market Need Section -->
+    <section id="market" class="fade-in-up" style="padding: 3rem 2rem;">
+      <div class="section-heading">
+        <h2>Market Need & Target Audience</h2>
+        <p class="subheading">Why TraceTutor exists and who it's built for</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+        <div style="background: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 8px 20px rgba(34,197,94,0.08);">
+          <h3 style="color: #14532d;">Students & Beginners</h3>
+          <p>Electrical Engineering and Computer Engineering students who want to gain hands-on PCB skills beyond theory-heavy university courses.</p>
+        </div>
+        <div style="background: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 8px 20px rgba(34,197,94,0.08);">
+          <h3 style="color: #14532d;">Career Switchers</h3>
+          <p>Professionals from adjacent tech fields who want to break into embedded systems or hardware design but feel overwhelmed by fragmented resources.</p>
+        </div>
+        <div style="background: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 8px 20px rgba(34,197,94,0.08);">
+          <h3 style="color: #14532d;">Hobbyists & Makers</h3>
+          <p>Passionate tinkerers and open-source contributors looking for a guided, project-based platform to turn ideas into hardware reality faster.</p>
+        </div>
+      </div>
+      <div style="margin-top: 2.5rem;">
+        <p style="text-align: center; max-width: 800px; margin: auto; font-size: 1.1rem;">The global demand for hardware engineers is growing rapidly, but PCB education hasn’t caught up. TraceTutor fills this void with AI-powered, structured learning. Our early waitlist interest shows that learners want this now.</p>
+      </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="fade-in-up" style="padding: 2rem; background: #f2f9ff;">
+        <h2>TraceTutor: Your Smart Path to PCB Mastery</h2>
+        <div class="solution-grid">
+            <div class="solution-box">
+                <h3>Personalized Learning Paths</h3>
+                <p>Describe what you want to build — our AI maps a custom learning journey tailored to your background and goals.</p>
+            </div>
+            <div class="solution-box">
+                <h3>Interactive Projects with Instant Feedback</h3>
+                <p>Learn by building. Our smart platform gives real-time tips and error detection as you work through real PCB tasks.</p>
+            </div>
+            <div class="solution-box">
+                <h3>AI-Powered Design Reviews</h3>
+                <p>Upload your schematic or layout — get AI-driven reviews that mimic industry engineers spotting common issues.</p>
+            </div>
+            <div class="solution-box">
+                <h3>Skills That Get You Hired</h3>
+                <p>We simulate professional workflows and standards. You won’t just learn — you’ll become job-ready for real hardware teams.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="cta-button">Try a Sample Lesson</button>
+            <button class="cta-button secondary">Compare Platforms</button>
+        </div>
+    </section>
+
+    <!-- Why TraceTutor is Better -->
+    <section id="evidence" class="fade-in-up" style="padding: 2rem;">
+        <h2>Why TraceTutor Beats the Alternatives</h2>
+        <p>Unlike static videos or fragmented tools, TraceTutor offers:</p>
+        <ul>
+          <li>✔ Smart, adaptive lessons personalized to you</li>
+          <li>✔ Hands-on, AI-guided projects — not just theory</li>
+          <li>✔ Real-time design feedback for fast growth</li>
+          <li>✔ Built-in tools used in actual industry workflows</li>
+        </ul>
+        <p>We’re not just another course — we’re your hardware co-pilot.</p>
+    </section>
+
+
+    <!-- Pitch Section -->
+    <section id="pitch" style="background: #f0fff4; padding: 3rem 2rem; color: #1a3c34;">
+      <h2 style="text-align: center; color: #1a3c34;">TraceTutor Pitch Summary</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+        <div><h3>Pain (+ Gain)</h3><p>Students struggle with fragmented tutorials, YouTube chaos, and outdated university curricula. TraceTutor fixes this with a guided, job-ready path that’s intuitive, smart, and deeply practical.</p></div>
+        <div><h3>Product</h3><p>TraceTutor offers an AI-powered learning platform for PCB design. Users describe what they want to build, and the system builds a path of lessons, projects, and reviews personalized to them.</p></div>
+        <div><h3>Product Demo</h3><p>The current pitch site shows platform structure. Future versions will feature interactive lessons and feedback demos directly accessible from the browser.</p></div>
+        <div><h3>What’s Unique</h3><p>We blend AI guidance, real-time project validation, and engineering best practices. No platform brings all of this together — TraceTutor is your hardware co-pilot.</p></div>
+        <div><h3>Customer Traction</h3><p>Interest from EE/CpE students, hackathon winners, and professionals exploring career pivots. Waitlist growing with signups from top universities.</p></div>
+        <div><h3>Business Model</h3><p>Freemium model: basic AI guidance is free, with Pro features (certification paths, live feedback, interview prep) under a subscription tier.</p></div>
+        <div><h3>Investment</h3><p>Looking to raise $75k for platform development and beta testing. Founder-funded MVP in progress. Investment will unlock full AI integration and outreach partnerships.</p></div>
+        <div><h3>Team</h3><p>Founded by EE/CpE students passionate about teaching through engineering. Supported by advisors in edtech, PCB design, and software engineering. We know the pain — we’ve lived it.</p></div>
+      </div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <h3 style="color: #1a3c34;">Ready to Join Us?</h3>
+        <p>Be part of the revolution in hardware education. Join our waitlist or contact us to collaborate or invest.</p>
+        <button class="cta-button" style="background-color: #1a3c34; color: white;">Get Involved</button>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" style="background: #ffffff; padding: 3rem 2rem;">
+      <div class="section-heading">
+        <h2>Pricing Plans</h2>
+        <p class="subheading">Choose a plan that fits your learning goals</p>
+      </div>
+      <div class="pricing-table" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem;">
+        <div style="flex: 1; min-width: 280px; max-width: 320px; border: 1px solid #d1fae5; border-radius: 12px; background: #ffffff; padding: 2rem; box-shadow: 0 8px 24px rgba(34,197,94,0.08); text-align: center;">
+          <h3 style="color: #14532d;">Basic</h3>
+          <p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">$0<span style="font-size: 0.9rem;">/month</span></p>
+          <ul style="list-style: none; padding: 0; text-align: left;">
+            <li>✅ AI-made courses</li>
+            <li>✅ Community support</li>
+            <li>✅ PDFs, projects, tutorials</li>
+            <li>✅ Quizzes & certifications</li>
+            <li>✅ Ads included</li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 280px; max-width: 320px; border: 2px solid #22c55e; border-radius: 12px; background: #f0fff4; padding: 2rem; box-shadow: 0 8px 24px rgba(34,197,94,0.12); text-align: center;">
+          <h3 style="color: #14532d;">Plus</h3>
+          <p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">$6<span style="font-size: 0.9rem;">/month</span></p>
+          <ul style="list-style: none; padding: 0; text-align: left;">
+            <li>✅ Everything in Basic</li>
+            <li>✅ Personalized AI courses</li>
+            <li>✅ Practice on mobile app</li>
+            <li>✅ Personalized drills</li>
+            <li>✅ AI job search engine</li>
+            <li>✅ 1-month free trial</li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 280px; max-width: 320px; border: 1px solid #d1fae5; border-radius: 12px; background: #ffffff; padding: 2rem; box-shadow: 0 8px 24px rgba(34,197,94,0.08); text-align: center;">
+          <h3 style="color: #14532d;">Pro</h3>
+          <p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">$12<span style="font-size: 0.9rem;">/month</span></p>
+          <ul style="list-style: none; padding: 0; text-align: left;">
+            <li>✅ Everything in Plus</li>
+            <li>✅ Offline downloads</li>
+            <li>✅ Custom video generation</li>
+            <li>✅ EE specialty career tracking</li>
+            <li>✅ Resume/CV feedback</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Financials Section -->
+    <section id="financials" style="background: #f8fefb; padding: 3rem 2rem;">
+      <div class="section-heading">
+        <h2>2025–2027 Financial Forecast</h2>
+        <p class="subheading">Growth projections and key performance metrics for TraceTutor’s next 3 years.</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <label for="yearToggle">Select Year:</label>
+        <select id="yearToggle" onchange="toggleYear(this.value)" style="padding: 0.5rem; font-size: 1rem; margin-left: 0.5rem;">
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+        </select>
+      </div>
+
+      <div id="financialData" class="pitch-grid" style="margin-top: 2rem;">
+        <div class="pitch-box" data-year="2025">
+          <h3>2025 Summary</h3>
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 1rem;">
+            <tr style="background-color: #e7fbe9; border-radius: 8px;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Revenue</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">$75</td>
+            </tr>
+            <tr style="background-color: #d1fae5; border-radius: 8px;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Net Profit</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">-$183</td>
+            </tr>
+            <tr style="background-color: #bbf7d0; border-radius: 8px;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Cash Flow</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">-$138</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="pitch-box" data-year="2026" style="display:none;">
+          <h3>2026 Summary</h3>
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 1rem;">
+            <tr style="background-color: #e7fbe9;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Revenue</td><td style="text-align: right; padding: 0.75rem 1rem;">$9,223</td></tr>
+            <tr style="background-color: #d1fae5;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Net Profit</td><td style="text-align: right; padding: 0.75rem 1rem;">$5,140</td></tr>
+            <tr style="background-color: #bbf7d0;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Cash Flow</td><td style="text-align: right; padding: 0.75rem 1rem;">$6,894</td></tr>
+          </table>
+        </div>
+
+        <div class="pitch-box" data-year="2027" style="display:none;">
+          <h3>2027 Summary</h3>
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 1rem;">
+            <tr style="background-color: #e7fbe9;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Revenue</td><td style="text-align: right; padding: 0.75rem 1rem;">$10,503</td></tr>
+            <tr style="background-color: #d1fae5;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Net Profit</td><td style="text-align: right; padding: 0.75rem 1rem;">$5,907</td></tr>
+            <tr style="background-color: #bbf7d0;"><td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Cash Flow</td><td style="text-align: right; padding: 0.75rem 1rem;">$11,312</td></tr>
+          </table>
+        </div>
+        <!-- Direct Costs 2027 forecast box -->
+        <div class="pitch-box" data-year="2027" style="display:none;">
+          <h3>2027 Direct Cost Breakdown</h3>
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 1rem;">
+            <tr style="background-color: #e7fbe9;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">AI API</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">$600</td>
+            </tr>
+            <tr style="background-color: #d1fae5;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Cloud Hosting</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">$120</td>
+            </tr>
+            <tr style="background-color: #bbf7d0;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Payments & Infra</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;">$1,345</td>
+            </tr>
+            <tr style="background-color: #a7f3d0;">
+              <td style="font-weight: bold; text-align: left; padding: 0.75rem 1rem;">Total</td>
+              <td style="text-align: right; padding: 0.75rem 1rem;"><strong>$2,065</strong></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin: 3rem auto; max-width: 1000px; padding: 0 1rem;">
+        <canvas id="forecastChart" style="width: 100%; height: 400px;"></canvas>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="files/tt-forecast.pdf" target="_blank" class="cta-button" download>Download Forecast PDF</a>
+      </div>
+    </section>
+
+    <!-- Cost Breakdown Section -->
+    <section id="cost-breakdown" style="background: #ffffff; padding: 3rem 2rem;">
+      <div class="section-heading">
+        <h2>Direct Cost Breakdown (2025–2027)</h2>
+        <p class="subheading">How TraceTutor is allocating operational resources over time.</p>
+      </div>
+      <div class="pricing-table" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 800px; text-align: left;">
+          <thead>
+            <tr style="background-color: #e7fbe9;">
+              <th style="padding: 1rem; border: 1px solid #d1fae5;">Cost Item</th>
+              <th style="padding: 1rem; border: 1px solid #d1fae5;">2025</th>
+              <th style="padding: 1rem; border: 1px solid #d1fae5;">2026</th>
+              <th style="padding: 1rem; border: 1px solid #d1fae5;">2027</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 0.8rem;">AI API Usage (OpenAI, Huggi, Llama)</td><td>$75</td><td>$570</td><td>$2252</td></tr>
+            <tr><td style="padding: 0.8rem;">Cloud Hosting & Storage (AWS, GCP, etc)</td><td>$6</td><td>$100</td><td>$120</td></tr>
+            <tr><td style="padding: 0.8rem;">Simulation Engine and Development Tools Licensing</td><td>$0</td><td>$0</td><td>$0</td></tr>
+            <tr><td style="padding: 0.8rem;">Domain Name</td><td>$20</td><td>$20</td><td>$20</td></tr>
+            <tr><td style="padding: 0.8rem;">User Analytics Tools</td><td>$0</td><td>$0</td><td>$0</td></tr>
+            <tr><td style="padding: 0.8rem;">Curriculum Design Tools & Software</td><td>$0</td><td>$0</td><td>$0</td></tr>
+            <tr><td style="padding: 0.8rem;">Frontend Hosting (Vercel, 0 until scaled)</td><td>$0</td><td>$0</td><td>$0</td></tr>
+            <tr><td style="padding: 0.8rem;">Database Hosting and Backups (Firebase, Supabase, etc)</td><td>$40</td><td>$170</td><td>$180</td></tr>
+            <tr><td style="padding: 0.8rem;">Backend Deployment (Render, Railway, etc)</td><td>$70</td><td>$290</td><td>$300</td></tr>
+            <tr><td style="padding: 0.8rem;">Payment Processing (Stripe)</td><td>$20</td><td>$243</td><td>$492</td></tr>
+            <tr><td style="padding: 0.8rem;">CDN (Global Accessibility)</td><td>$15</td><td>$180</td><td>$180</td></tr>
+            <tr><td style="padding: 0.8rem;">Email Service (Password Resets, Account Verification, etc)</td><td>$30</td><td>$360</td><td>$360</td></tr>
+            <tr style="font-weight: bold;"><td style="padding: 0.8rem;">Total</td><td>$201</td><td>$1,933</td><td>$2,252</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <main id="comparison">
+      <section class="fade-in-up" style="padding: 3rem 2rem; background: #f9fefb;">
+        <div class="section-heading">
+          <h2>Why TraceTutor Beats the Alternatives</h2>
+          <p class="subheading">See how we outperform traditional learning platforms across the most important categories</p>
+        </div>
+        <ul style="max-width: 900px; margin: 2rem auto; font-size: 1.1rem; color: #14532d;">
+          <li>✔ Smart, adaptive lessons personalized to you</li>
+          <li>✔ Hands-on, AI-guided projects — not just theory</li>
+          <li>✔ Real-time design feedback for fast growth</li>
+          <li>✔ Built-in tools used in actual industry workflows</li>
+        </ul>
+
+        <table class="heatmap-table" aria-label="Platform Comparison Heatmap">
+          <caption>PCB Learning Competitor Comparison Heatmap</caption>
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Content Quality</th>
+              <th>Structure</th>
+              <th>Certificates</th>
+              <th>Cost</th>
+              <th>Flexibility</th>
+              <th>Hands-on Practice</th>
+              <th>Community / Feedback</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Coursera</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-1">1</td><td class="heatmap-1">1</td></tr>
+            <tr><td>edX</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-1">1</td><td class="heatmap-2">2</td></tr>
+            <tr><td>Udemy</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-4">4</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td></tr>
+            <tr><td>Altium Education</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td></tr>
+            <tr><td>EasyEDA</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td><td class="heatmap-1">1</td><td class="heatmap-4">4</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td></tr>
+            <tr><td>LinkedIn Learning</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td></tr>
+            <tr><td>KiCad Community</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-1">1</td><td class="heatmap-4">4</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td></tr>
+            <tr><td>PCBWay</td><td class="heatmap-2">2</td><td class="heatmap-1">1</td><td class="heatmap-1">1</td><td class="heatmap-4">4</td><td class="heatmap-1">1</td><td class="heatmap-1">1</td><td class="heatmap-1">1</td></tr>
+            <tr><td>YouTube</td><td class="heatmap-3">3</td><td class="heatmap-2">2</td><td class="heatmap-1">1</td><td class="heatmap-5">5</td><td class="heatmap-4">4</td><td class="heatmap-2">2</td><td class="heatmap-2">2</td></tr>
+            <tr><td>Univ EE Programs</td><td class="heatmap-5">5</td><td class="heatmap-3">3</td><td class="heatmap-5">5</td><td class="heatmap-1">1</td><td class="heatmap-1">1</td><td class="heatmap-3">3</td><td class="heatmap-3">3</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Testimonial Quotes Section -->
+    <section id="testimonial-quotes" style="background: #f0fff4; padding: 3rem 2rem;">
+      <div class="section-heading">
+        <h2>Why Updated PCB Education Matters</h2>
+        <p class="subheading">Voices from the industry and academia</p>
+      </div>
+      <div style="max-width: 1000px; margin: auto; font-size: 1rem; color: #14532d; line-height: 1.6;">
+        <blockquote style="background: #ffffff; border-left: 5px solid #22c55e; margin: 1.5rem 0; padding: 1rem;">
+          “Despite the importance of PCBs in virtually every electronic product released to market today, you’d be surprised at how little the university system has focused on fostering educational programs focusing on printed circuit design and manufacturing.”
+          <br><small>— Altium Blog, <a href="https://resources.altium.com/p/why-dont-universities-teach-pcb-design" target="_blank" style="color: #1a3c34;">Altium</a></small>
+        </blockquote>
+        <blockquote style="background: #ffffff; border-left: 5px solid #22c55e; margin: 1.5rem 0; padding: 1rem;">
+          “The demand for competent PCB designers is expected to increase in the coming decades as the current workforce retires.”
+          <br><small>— IPC, <a href="https://www.ipc.org/newsroom/pcb-design-career-roadmap" target="_blank" style="color: #1a3c34;">ipc.org</a></small>
+        </blockquote>
+        <blockquote style="background: #ffffff; border-left: 5px solid #22c55e; margin: 1.5rem 0; padding: 1rem;">
+          “PCB design combines many of the fundamental concepts in electrical and electronics engineering with a focus on designing a physical product… a PCB design course exposes students to a standardized workflow implemented throughout the electronics industry.”
+          <br><small>— Altium Academy, <a href="https://education.altium.com/student-resources/pcb-design-course-outline/" target="_blank" style="color: #1a3c34;">education.altium.com</a></small>
+        </blockquote>
+        <blockquote style="background: #ffffff; border-left: 5px solid #22c55e; margin: 1.5rem 0; padding: 1rem;">
+          “Learning PCB layout software and design principles on your own can be challenging. Quality courses efficiently build beginner competencies through structured curriculums and practical projects.”
+          <br><small>— EE Times, <a href="https://www.eetimes.com/how-to-learn-pcb-design-fast/" target="_blank" style="color: #1a3c34;">eetimes.com</a></small>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section fade-in-up">
+        <div class="container">
+            <h2 class="section-title">Ready to Master PCB Design?</h2>
+            <p class="section-subtitle">Join the waitlist and be the first to know when TraceTutor launches</p>
+            
+            <div class="contact-form">
+                <input type="email" placeholder="Enter your email" class="email-input" />
+                <button class="cta-button">Join Waitlist</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 TraceTutor. Empowering future engineers.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+    <script>
+      function toggleYear(year) {
+        document.querySelectorAll('#financialData .pitch-box').forEach(box => {
+          box.style.display = box.getAttribute('data-year') === year ? 'block' : 'none';
+        });
+      }
+
+      function animateCount() {
+        document.querySelectorAll('.countup').forEach(el => {
+          const target = parseInt(el.getAttribute('data-count'));
+          let count = 0;
+          const duration = 1000;
+          const increment = target / (duration / 30);
+          const update = () => {
+            count += increment;
+            el.textContent = Math.round(count);
+            if ((increment > 0 && count < target) || (increment < 0 && count > target)) {
+              requestAnimationFrame(update);
+            } else {
+              el.textContent = target;
+            }
+          };
+          update();
+        });
+      }
+
+      // Animate countups when the page loads
+      window.addEventListener('load', animateCount);
+
+      // Render chart
+      const ctx = document.getElementById('forecastChart').getContext('2d');
+      const forecastChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['2025', '2026', '2027'],
+          datasets: [
+            {
+              label: 'Revenue',
+              data: [75, 9223, 10503],
+              borderColor: '#22c55e',
+              backgroundColor: 'rgba(34,197,94,0.08)',
+              fill: false,
+              tension: 0.25,
+              pointBackgroundColor: '#22c55e',
+              pointBorderColor: '#14532d',
+              pointRadius: 5
+            },
+            {
+              label: 'Net Profit',
+              data: [-183, 5140, 5907],
+              borderColor: '#1a3c34',
+              backgroundColor: 'rgba(26,60,52,0.08)',
+              fill: false,
+              tension: 0.25,
+              pointBackgroundColor: '#1a3c34',
+              pointBorderColor: '#22c55e',
+              pointRadius: 5
+            },
+            {
+              label: 'Cash Flow',
+              data: [-138, 6894, 11312],
+              borderColor: '#6b7280',
+              backgroundColor: 'rgba(107,114,128,0.08)',
+              fill: false,
+              tension: 0.25,
+              pointBackgroundColor: '#6b7280',
+              pointBorderColor: '#22c55e',
+              pointRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#1a3c34',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'TraceTutor Financial Growth (2025–2027)',
+              color: '#14532d',
+              font: {
+                size: 18
+              }
+            },
+            tooltip: {
+              backgroundColor: '#1a3c34',
+              titleColor: '#22c55e',
+              bodyColor: '#fff'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Amount (USD)',
+                color: '#1a3c34',
+                font: {
+                  size: 14
+                }
+              },
+              ticks: {
+                color: '#1a3c34'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Year',
+                color: '#1a3c34',
+                font: {
+                  size: 14
+                }
+              },
+              ticks: {
+                color: '#1a3c34'
+              }
+            }
+          }
+        }
+      });
+    </script>
+</body>
+</html>
