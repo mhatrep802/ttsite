@@ -3,155 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TraceTutor Demo</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background-color: #f9fefb;
-      color: #1a3c34;
-      scroll-behavior: smooth;
-    }
-    header {
-      background: linear-gradient(90deg, #14532d 0%, #198754 100%);
-      padding: 3rem 2rem;
-      color: white;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    header p {
-      font-size: 1.1rem;
-      max-width: 720px;
-      margin: auto;
-    }
-    .search-section {
-      padding: 4rem 2rem;
-      background: #e7fbe9;
-      text-align: center;
-    }
-    .search-section h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #14532d;
-    }
-    .search-box input {
-      padding: 1rem 1.5rem;
-      width: 60%;
-      max-width: 500px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    .steps-section {
-      padding: 4rem 2rem;
-      background: white;
-    }
-    .step {
-      max-width: 900px;
-      margin: auto;
-      margin-bottom: 4rem;
-      background: #ffffff;
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
-      transition: transform 0.3s ease;
-    }
-    .step:hover {
-      transform: translateY(-5px);
-    }
-    .step h2 {
-      margin-top: 0;
-      color: #14532d;
-      font-size: 1.6rem;
-    }
-    .step p {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .step img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-top: 1.5rem;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
-  </style>
+  <title>TraceTutor Pitch</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">TraceTutor</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="evidence.html">Why TraceTutor?</a>
+        <a href="pitch.html" class="active">Pitch</a>
+      </div>
+    </div>
+  </nav>
 
-  <header style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; background: linear-gradient(100deg, #14532d 0%, #198754 100%); padding: 6rem 2rem;">
-    <h1 style="font-size: 3rem; max-width: 900px; margin-bottom: 1rem;">Discover AI-Powered PCB Learning</h1>
-    <p style="font-size: 1.2rem; max-width: 800px; margin-bottom: 2rem;">Experience how TraceTutor gives you smart, structured, hands-on PCB training — personalized to your goals and guided by AI.</p>
-    <a href="#step1" style="padding: 0.75rem 1.5rem; background: #ffffff; color: #14532d; font-weight: bold; border-radius: 8px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Start the Demo</a>
-  </header>
+  <!-- Hero -->
+  <section class="problem-section">
+    <div class="slide-container">
+      <div class="hero-section">
+        <h1 class="hero-title">The Future of PCB Design Education</h1>
+        <p class="hero-subtitle">TraceTutor is redefining how future engineers learn PCB design — making it intuitive, hands-on, and industry-ready from day one.</p>
+      </div>
 
-  <section class="search-section">
-    <h1>What do you want to learn today?</h1>
-    <div class="search-box">
-      <input type="text" placeholder="e.g., Route differential pairs, Learn KiCad basics">
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-icon">😫</div>
+          <h3 class="problem-title">The Problem</h3>
+          <p>Engineering students are expected to design PCBs with almost no formal training. Most learn from scattered, tool-specific resources — with no structure or feedback.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🎯</div>
+          <h3 class="problem-title">The Solution</h3>
+          <p>TraceTutor turns PCB design into a guided, gamified experience with real feedback and tool-agnostic training. Students graduate confident and industry-ready.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🧠</div>
+          <h3 class="problem-title">Product</h3>
+          <p>Interactive modules, real-time scoring, tool-flexible challenges, and project-based learning. Built for students, scalable for schools and teams.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🚀</div>
+          <h3 class="problem-title">What's Unique</h3>
+          <p>Not tool-locked. Real feedback. Designed like Codecademy, but for hardware. We fill the gaps left by Altium Academy and Fedevel.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">📈</div>
+          <h3 class="problem-title">Traction</h3>
+          <p>Pilot interest from universities. Feedback from professors. Students and forums expressing demand. Prototype built and user research ongoing.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">💸</div>
+          <h3 class="problem-title">Business Model</h3>
+          <p>Freemium for students. Premium tiers for schools and startups. Scalable via curriculum adoption and team training programs.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">💰</div>
+          <h3 class="problem-title">Investment</h3>
+          <p>Raising funds to finish our MVP, launch university pilots, and reach our first 1,000 users. Seeking experienced EdTech and SaaS investors.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🧑‍💻</div>
+          <h3 class="problem-title">Team</h3>
+          <p>Led by a dual EE/CE student with hands-on PCB experience and a deep understanding of peer struggles. Backed by mentors and educators.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">📣</div>
+          <h3 class="problem-title">Call to Action</h3>
+          <p>Let's build the Codecademy of hardware. Visit TraceTutor or contact us to join our pilot, invest, or collaborate.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="course-cards" style="background: #ffffff; padding: 4rem 2rem;">
-    <div style="text-align: center; margin-bottom: 2rem;">
-      <h2 style="color: #14532d; font-size: 2rem;">Featured Courses</h2>
-      <p style="color: #333;">Start with any course to explore its content, projects, and quizzes</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: auto;">
-      <a href="#" style="text-decoration: none;">
-        <div style="background: #f9f9f9; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-          <img src="assets/course1.jpg" alt="Intro to PCB" style="width: 100%; height: 160px; object-fit: cover;">
-          <div style="padding: 1rem;">
-            <h3 style="margin: 0 0 0.5rem; color: #2563eb;">Unit 1 - Introduction to PCB Design</h3>
-            <p style="margin: 0; font-size: 0.9rem; color: #555;">FREE • AI-Guided</p>
-          </div>
-        </div>
-      </a>
-      <a href="#" style="text-decoration: none;">
-        <div style="background: #f9f9f9; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-          <img src="assets/course2.jpg" alt="Schematics" style="width: 100%; height: 160px; object-fit: cover;">
-          <div style="padding: 1rem;">
-            <h3 style="margin: 0 0 0.5rem; color: #2563eb;">Unit 2 - Schematics and Libraries</h3>
-            <p style="margin: 0; font-size: 0.9rem; color: #555;">FREE • AI-Guided</p>
-          </div>
-        </div>
-      </a>
-      <a href="#" style="text-decoration: none;">
-        <div style="background: #f9f9f9; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-          <img src="assets/course3.jpg" alt="PCB Layout" style="width: 100%; height: 160px; object-fit: cover;">
-          <div style="padding: 1rem;">
-            <h3 style="margin: 0 0 0.5rem; color: #2563eb;">Unit 3 - PCB Layout</h3>
-            <p style="margin: 0; font-size: 0.9rem; color: #555;">FREE • AI-Guided</p>
-          </div>
-        </div>
-      </a>
-      <!-- Add more course cards as needed -->
-    </div>
-  </section>
-
-  <section class="steps-section">
-    <div class="step" id="step1">
-      <h2>Step 1: Enter Your Learning Goal</h2>
-      <p>Type in your PCB design goal — whether it's layout, simulation, or component selection — and our AI generates a personalized path.</p>
-      <img src="assets/demo-step1.png" alt="User entering learning goal in TraceTutor">
-    </div>
-
-    <div class="step" id="step2">
-      <h2>Step 2: Get a Guided Lesson Plan</h2>
-      <p>TraceTutor builds a smart sequence of interactive lessons, projects, and assessments tailored to your skill level and goal.</p>
-      <img src="assets/demo-step2.png" alt="TraceTutor AI creating personalized curriculum">
-    </div>
-
-    <div class="step" id="step3">
-      <h2>Step 3: Learn by Building</h2>
-      <p>Launch into hands-on modules, circuit simulations, and tool-integrated walkthroughs that mimic real-world design workflows.</p>
-      <img src="assets/demo-step3.png" alt="Interactive project environment">
-    </div>
-  </section>
-
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 TraceTutor. All rights reserved.</p>
+  </footer>
 </body>
 </html>
